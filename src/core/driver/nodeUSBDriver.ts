@@ -186,7 +186,7 @@ export class NodeUSBDriver extends EventEmitter implements USBDriverBase {
      */
     async open(): Promise<boolean> {
         const devices = this.getDevices();
-
+        console.log(`Found ${devices.length} devices with VID: ${this.idVendor}, PID: ${this.idProduct}`);
         while (devices.length) {
             try {
                 const device = devices.shift();

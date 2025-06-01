@@ -1,6 +1,6 @@
 import * as Ant from "../dist/index.mjs";
 
-const stick = new Ant.GarminStick2();
+const stick = new Ant.GarminStick2({usbDebugLevel: 2, throwLibUSBException: true});
 
 const debug = true;
 
