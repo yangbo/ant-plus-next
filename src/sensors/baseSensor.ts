@@ -109,6 +109,12 @@ export abstract class BaseSensor extends EventEmitter {
                 case Constants.MESSAGE_CHANNEL_CLOSE:
                     return true;
                 case Constants.MESSAGE_CHANNEL_UNASSIGN:
+                    await this.write(Messages.unassignChannel(channel));
+                    console.log(`[USB] write unassignChannel(${channel})`);
+                    const detached = await this.stick.detach(this);
+                    if (!detached) {
+                        throw new Error("Error on detaching");
+                    }
                     this.statusCbk = undefined;
                     this.channel = undefined;
                     nextTick(() => this.emit("detached"));
@@ -224,6 +230,12 @@ export abstract class BaseSensor extends EventEmitter {
                 case Constants.MESSAGE_CHANNEL_CLOSE:
                     return true;
                 case Constants.MESSAGE_CHANNEL_UNASSIGN:
+                    console.log(`[USB] write unassignChannel(${channel})`);
+                    await this.write(Messages.unassignChannel(channel));
+                    const detached = await this.stick.detach(this);
+                    if (!detached) {
+                        throw new Error("Error on detaching");
+                    }
                     this.statusCbk = undefined;
                     this.channel = undefined;
                     nextTick(() => this.emit("detached"));
